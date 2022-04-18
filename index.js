@@ -1,5 +1,5 @@
 const express = require('express');
-const {getUsers, getUserById, createUser, updateUser, deleteUser} = require('./queries')
+const {getUsers, getUserById, createUser, updateUser, deleteUser, homePage} = require('./queries')
 
 
 const app = express()
@@ -7,9 +7,7 @@ const app = express()
 app.use(express.json({extended : false}));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res)=> {
-  res.json({message : "welcome to the postgreSQL world"});
-});
+app.get('/', homePage);
 
 app.get('/users', getUsers);
 app.get('/users/:id', getUserById);

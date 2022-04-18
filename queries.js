@@ -8,6 +8,10 @@ const pool = new Pool({
   port : 5432,
 })
 
+const homePage = (req, res)=> {
+  res.json({message : "welcome to the postgreSQL world"});
+};
+
 const getUsers = async(req, res) => {
   try {
     const users = await pool.query('SELECT id, fullname, country FROM person ORDER BY id ASC');
@@ -24,9 +28,8 @@ const getUserById = async(req, res) => {
     const userById = await pool.query('SELECT * FROM person WHERE id = $1', [id]);
     if(userById.rowCount === 0 ){return res.status(400).json('this user does not exists anymore')}
 
-    res.status(200).json(userById.rows);
+    res.json(userById.rows);
   } catch (error) {
-    console.log(error)
     res.status(404).json(error);
   }
 }
@@ -67,5 +70,5 @@ const deleteUser = async(req, res) => {
 }
 
 module.exports = {
-  getUsers, getUserById, createUser, updateUser, deleteUser
+  getUsers, getUserById, createUser, updateUser, deleteUser,homePage
 }
